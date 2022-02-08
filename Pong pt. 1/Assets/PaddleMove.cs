@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PaddleMove : MonoBehaviour
 {
-    public float moveSpeed = 20.0f;
+    public float moveSpeed = 1.0f;
     public GameObject paddle1, paddle2;
 
     // Start is called before the first frame update
@@ -19,23 +19,41 @@ public class PaddleMove : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             GameObject instance = paddle1;
-            instance.GetComponent<Rigidbody>().velocity += Vector3.forward * moveSpeed * Time.deltaTime;
+            instance.GetComponent<Rigidbody>().velocity = Vector3.forward * moveSpeed;
         }
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
             GameObject instance = paddle1;
-            instance.GetComponent<Rigidbody>().velocity += Vector3.back * moveSpeed * Time.deltaTime;
+            instance.GetComponent<Rigidbody>().velocity = Vector3.back * moveSpeed;
+        }
+        else
+        {
+            GameObject instance = paddle1;
+            instance.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
         
         if (Input.GetKey(KeyCode.UpArrow))
         {
             GameObject instance = paddle2;
-            instance.GetComponent<Rigidbody>().velocity += Vector3.forward * moveSpeed * Time.deltaTime;
+            instance.GetComponent<Rigidbody>().velocity = Vector3.forward * moveSpeed;
         }
-        if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.DownArrow))
         {
             GameObject instance = paddle2;
-            instance.GetComponent<Rigidbody>().velocity += Vector3.back * moveSpeed * Time.deltaTime;
+            instance.GetComponent<Rigidbody>().velocity = Vector3.back * moveSpeed;
+        }
+        else
+        {
+            GameObject instance = paddle2;
+            instance.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+    }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "BallPrefab")
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.Reflect(GetComponent<Rigidbody>().velocity, collision.contacts[0].normal); 
         }
     }
 }
