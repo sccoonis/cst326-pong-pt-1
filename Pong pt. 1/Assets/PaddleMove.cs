@@ -1,17 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PaddleMove : MonoBehaviour
 {
     public float moveSpeed = 1.0f;
     public GameObject paddle1, paddle2;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -55,5 +47,6 @@ public class PaddleMove : MonoBehaviour
         {
             GetComponent<Rigidbody>().velocity = Vector3.Reflect(GetComponent<Rigidbody>().velocity, collision.contacts[0].normal); 
         }
+
     }
 }
